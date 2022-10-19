@@ -1,0 +1,67 @@
+{
+	"name": "Notebook 1",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "poolbenja",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 1,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "true",
+				"spark.dynamicAllocation.minExecutors": "1",
+				"spark.dynamicAllocation.maxExecutors": "3",
+				"spark.autotune.trackingId": "1ee07089-364e-4354-8bde-f33c1e5c2fe0"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/014960c5-869b-4f4e-906b-22e56eaafca2/resourceGroups/PFhenry/providers/Microsoft.Synapse/workspaces/azure-workspace/bigDataPools/poolbenja",
+				"name": "poolbenja",
+				"type": "Spark",
+				"endpoint": "https://azure-workspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/poolbenja",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.2",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": true
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					}
+				},
+				"source": [
+					"%%pyspark\r\n",
+					"df = spark.read.load('abfss://synapse@pfhenry.dfs.core.windows.net/training/metadata/metadata9.gz.parquet', format='parquet')\r\n",
+					"display(df.limit(10))"
+				],
+				"execution_count": 5
+			}
+		]
+	}
+}
