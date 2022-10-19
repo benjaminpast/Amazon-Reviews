@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "true",
 				"spark.dynamicAllocation.minExecutors": "1",
 				"spark.dynamicAllocation.maxExecutors": "3",
-				"spark.autotune.trackingId": "5208538e-cdf2-4706-8a66-e19a3bebd4d4"
+				"spark.autotune.trackingId": "75b26d98-d86c-4e2b-8df5-4d8773339d94"
 			}
 		},
 		"metadata": {
@@ -60,7 +60,7 @@
 					"df = spark.read.load('abfss://synapse@pfhenry.dfs.core.windows.net/training/metadata/metadata0.gz.parquet', format='parquet')\r\n",
 					"display(df.limit(10))"
 				],
-				"execution_count": 15
+				"execution_count": 3
 			}
 		]
 	}
