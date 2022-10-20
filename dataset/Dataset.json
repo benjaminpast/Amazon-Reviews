@@ -1,0 +1,20 @@
+{
+	"name": "Dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azure-workspace-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "training/reviews/reviews_Amazon_Instant_Video_5.gz.parquet",
+				"fileSystem": "synapse"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
