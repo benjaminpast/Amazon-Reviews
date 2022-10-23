@@ -21,6 +21,19 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('workspaceName'), '/PowerBIWorkspace_Benja')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "PowerBIWorkspace",
+				"typeProperties": {
+					"tenantID": "28ed143a-2335-4ab7-bb3c-208d1655b741"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/azure-workspace-WorkspaceDefaultSqlServer')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
@@ -83,6 +96,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT [reviewerID]\n,[asin]\n,[reviewerName]\n,[reviewText]\n,[overall]\n,[summary]\n,[unixReviewTime]\n,[reviewTime]\n,[helpful0]\n,[helpful1]\n FROM [default].[dbo].[reviews_amazon_instant_video] group by asin",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "default",
+						"poolName": "Built-in"
+					},
+					"resultLimit": -1
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/Notebook 1')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
@@ -103,7 +136,7 @@
 						"spark.dynamicAllocation.enabled": "true",
 						"spark.dynamicAllocation.minExecutors": "1",
 						"spark.dynamicAllocation.maxExecutors": "3",
-						"spark.autotune.trackingId": "30f611d6-fc0e-413b-8ff9-0bc73838e288"
+						"spark.autotune.trackingId": "e5d1af10-2115-4a72-8237-6c4233e78183"
 					}
 				},
 				"metadata": {
@@ -128,8 +161,7 @@
 						"sparkVersion": "3.2",
 						"nodeCount": 10,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": true
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -143,11 +175,515 @@
 						},
 						"source": [
 							"%%pyspark\r\n",
-							"df = spark.read.load('abfss://synapse@pfhenry.dfs.core.windows.net/training/metadata/metadata9.gz.parquet', format='parquet')\r\n",
+							"df = spark.read.load('abfss://synapse@pfhenry.dfs.core.windows.net/training/metadata/metadata0.gz.parquet', format='parquet')\r\n",
 							"display(df.limit(10))"
 						],
 						"outputs": [],
+						"execution_count": 3
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Notebook 2')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "02d92df9-ce2a-410d-bf24-1fcaf87913da"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"enableDebugMode": false,
+					"kernelspec": {
+						"name": "synapse_pyspark",
+						"display_name": "Synapse PySpark"
+					},
+					"language_info": {
+						"name": "python"
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "code",
+						"metadata": {
+							"microsoft": {
+								"language": "python"
+							},
+							"collapsed": false
+						},
+						"source": [
+							"%%pyspark\r\n",
+							"df = spark.read.load('abfss://synapse@pfhenry.dfs.core.windows.net/training/reviews/reviews_Amazon_Instant_Video_5.gz.parquet', format='parquet')\r\n",
+							"display(df.limit(10))"
+						],
+						"outputs": [],
+						"execution_count": 17
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"tranformar dataframe de sparkr a pandas"
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"import pandas as pd\r\n",
+							"df = df.toPandas()"
+						],
+						"outputs": [],
+						"execution_count": 19
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"df.info()"
+						],
+						"outputs": [],
+						"execution_count": 21
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"df['reviewTime']de str a datetime"
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"import datetime\r\n",
+							"df['reviewTime'] = pd.to_datetime(df['reviewTime'].str.replace('[,\\s]',''),format='%m%d%Y')"
+						],
+						"outputs": [],
+						"execution_count": 22
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							""
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"df.sort_values(by=['reviewTime'])"
+						],
+						"outputs": [],
+						"execution_count": 23
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"df.head(1000)"
+						],
+						"outputs": [],
 						"execution_count": 5
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"tranformacion de dato lista a dos columnas nuevas int en la columna helpful"
+						]
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"el codigo es horribele y poco perfoermantes ver mejora posible"
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"x=0\r\n",
+							"while (x < (len(df['helpful']))):\r\n",
+							"    df['helpful0']= (df['helpful'][x][0])\r\n",
+							"    df['helpful1']= (df['helpful'][x][1])\r\n",
+							"    x=x+1\r\n",
+							"for i , x in enumerate(df['helpful']):\r\n",
+							"    df['helpful0'][i]= x[0]\r\n",
+							"    df['helpful1'][i]= x[1]"
+						],
+						"outputs": [],
+						"execution_count": 24
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"len( df['helpful0']),len(df['helpful1']),len(df['helpful'])"
+						],
+						"outputs": [],
+						"execution_count": 8
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"df.drop('helpful', axis=1,inplace=True)"
+						],
+						"outputs": [],
+						"execution_count": 25
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"df.drop('__index_level_0__', axis=1,inplace=True) "
+						],
+						"outputs": [],
+						"execution_count": 26
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"chequeo las columnas"
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"df.info()"
+						],
+						"outputs": [],
+						"execution_count": 27
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"cuento las reseñas x producto"
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"\r\n",
+							"\r\n",
+							"df['asin'].value_counts()\r\n",
+							"\r\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": 11
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"#df_pais[(df_pais['Clave_Hash'] == 61546) | (df_pais['Clave_Hash'] == 61547)]"
+						],
+						"outputs": [],
+						"execution_count": 12
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"spark.conf.set(\"spark.sql.execution.arrow.enabled\",\"true\")\r\n",
+							"sparkDF2=spark.createDataFrame(df) \r\n",
+							"sparkDF2.printSchema()\r\n",
+							"sparkDF2.show()\r\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": 31
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"df.head(1)"
+						],
+						"outputs": [],
+						"execution_count": 35
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"spark.conf.set(\"spark.sql.execution.arrow.pyspark.enabled\", \"true\")\r\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"sparkDF2.write.mode(\"overwrite\").saveAsTable(\"default.tabla_reviews_Amazon_Instant_Video\")"
+						],
+						"outputs": [],
+						"execution_count": 36
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"#abfss://synapse@pfhenry.dfs.core.windows.net/training/reviews/reviews_Amazon_Instant_Video_5.gz.parquet"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"sparkDF2.write.format(\"parquet\").mode(\"overwrite\").save(\"/training/reviews/reviews_Amazon_Instant_Video_5.gz.parquet\")"
+						],
+						"outputs": [],
+						"execution_count": 37
 					}
 				]
 			},
@@ -164,15 +700,15 @@
 				},
 				"autoScale": {
 					"enabled": true,
-					"maxNodeCount": 13,
-					"minNodeCount": 3
+					"maxNodeCount": 18,
+					"minNodeCount": 5
 				},
-				"nodeCount": 10,
+				"nodeCount": 0,
 				"nodeSize": "Small",
 				"nodeSizeFamily": "MemoryOptimized",
 				"sparkVersion": "3.2",
 				"isComputeIsolationEnabled": false,
-				"sessionLevelPackagesEnabled": false,
+				"sessionLevelPackagesEnabled": true,
 				"annotations": []
 			},
 			"dependsOn": [],
