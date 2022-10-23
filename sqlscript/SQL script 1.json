@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 1",
+	"properties": {
+		"content": {
+			"query": "SELECT [reviewerID]\n,[asin]\n,[reviewerName]\n,[reviewText]\n,[overall]\n,[summary]\n,[unixReviewTime]\n,[reviewTime]\n,[helpful0]\n,[helpful1]\n FROM [default].[dbo].[reviews_amazon_instant_video] group by asin",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "default",
+				"poolName": "Built-in"
+			},
+			"resultLimit": -1
+		},
+		"type": "SqlQuery"
+	}
+}
