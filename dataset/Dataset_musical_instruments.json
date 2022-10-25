@@ -1,0 +1,72 @@
+{
+	"name": "Dataset_musical_instruments",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azure-workspace-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"destiny": {
+				"type": "string",
+				"defaultValue": "reviews_Musical_Instruments_5.gz.parquet"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "destiny",
+				"folderPath": "training/reviews",
+				"fileSystem": "synapse"
+			},
+			"compressionCodec": "gzip"
+		},
+		"schema": [
+			{
+				"name": "reviewerID",
+				"type": "UTF8"
+			},
+			{
+				"name": "asin",
+				"type": "UTF8"
+			},
+			{
+				"name": "reviewerName",
+				"type": "UTF8"
+			},
+			{
+				"name": "reviewText",
+				"type": "UTF8"
+			},
+			{
+				"name": "overall",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "summary",
+				"type": "UTF8"
+			},
+			{
+				"name": "unixReviewTime",
+				"type": "INT64"
+			},
+			{
+				"name": "reviewTime",
+				"type": "TIMESTAMP_MICROS"
+			},
+			{
+				"name": "helpful0",
+				"type": "INT64"
+			},
+			{
+				"name": "helpful1",
+				"type": "INT64"
+			},
+			{
+				"name": "__index_level_0__",
+				"type": "INT64"
+			}
+		]
+	}
+}

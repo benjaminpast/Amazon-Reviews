@@ -1,0 +1,19 @@
+{
+	"name": "AzureSynapseAnalytics_instrumentos_musicales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azure-workspace-WorkspaceDefaultSqlServer",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"DBName": "dedicated1"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Analytics_instrumentos_musicales"
+		}
+	}
+}
