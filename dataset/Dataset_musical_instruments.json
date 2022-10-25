@@ -5,18 +5,12 @@
 			"referenceName": "azure-workspace-WorkspaceDefaultStorage",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"destiny": {
-				"type": "string",
-				"defaultValue": "reviews_Musical_Instruments_5.gz.parquet"
-			}
-		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "destiny",
+				"fileName": "reviews_Musical_Instruments_5.gz.parquet",
 				"folderPath": "training/reviews",
 				"fileSystem": "synapse"
 			},

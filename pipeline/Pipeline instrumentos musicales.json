@@ -39,10 +39,7 @@
 				"inputs": [
 					{
 						"referenceName": "Dataset_musical_instruments",
-						"type": "DatasetReference",
-						"parameters": {
-							"destiny": "reviews_Musical_Instruments_5.gz.parquet"
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [

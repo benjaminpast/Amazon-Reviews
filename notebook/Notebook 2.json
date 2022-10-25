@@ -3,17 +3,21 @@
 	"properties": {
 		"nbformat": 4,
 		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "poolbenja",
+			"type": "BigDataPoolReference"
+		},
 		"sessionProperties": {
 			"driverMemory": "28g",
 			"driverCores": 4,
 			"executorMemory": "28g",
 			"executorCores": 4,
-			"numExecutors": 2,
+			"numExecutors": 1,
 			"conf": {
-				"spark.dynamicAllocation.enabled": "false",
-				"spark.dynamicAllocation.minExecutors": "2",
-				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "02d92df9-ce2a-410d-bf24-1fcaf87913da"
+				"spark.dynamicAllocation.enabled": "true",
+				"spark.dynamicAllocation.minExecutors": "1",
+				"spark.dynamicAllocation.maxExecutors": "8",
+				"spark.autotune.trackingId": "8e76a505-249a-4f70-8972-4ed8daa7d288"
 			}
 		},
 		"metadata": {
@@ -25,6 +29,21 @@
 			},
 			"language_info": {
 				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/014960c5-869b-4f4e-906b-22e56eaafca2/resourceGroups/PFhenry/providers/Microsoft.Synapse/workspaces/azure-workspace/bigDataPools/poolbenja",
+				"name": "poolbenja",
+				"type": "Spark",
+				"endpoint": "https://azure-workspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/poolbenja",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.2",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": true
 			},
 			"sessionKeepAliveTimeout": 30
 		},
@@ -42,7 +61,7 @@
 					"df = spark.read.load('abfss://synapse@pfhenry.dfs.core.windows.net/training/reviews/reviews_Amazon_Instant_Video_5.gz.parquet', format='parquet')\r\n",
 					"display(df.limit(10))"
 				],
-				"execution_count": 17
+				"execution_count": 4
 			},
 			{
 				"cell_type": "markdown",
@@ -74,7 +93,7 @@
 					"import pandas as pd\r\n",
 					"df = df.toPandas()"
 				],
-				"execution_count": 19
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -92,7 +111,7 @@
 				"source": [
 					"df.info()"
 				],
-				"execution_count": 21
+				"execution_count": null
 			},
 			{
 				"cell_type": "markdown",
@@ -124,7 +143,7 @@
 					"import datetime\r\n",
 					"df['reviewTime'] = pd.to_datetime(df['reviewTime'].str.replace('[,\\s]',''),format='%m%d%Y')"
 				],
-				"execution_count": 22
+				"execution_count": null
 			},
 			{
 				"cell_type": "markdown",
@@ -155,7 +174,7 @@
 				"source": [
 					"df.sort_values(by=['reviewTime'])"
 				],
-				"execution_count": 23
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -173,7 +192,7 @@
 				"source": [
 					"df.head(1000)"
 				],
-				"execution_count": 5
+				"execution_count": null
 			},
 			{
 				"cell_type": "markdown",
@@ -224,7 +243,7 @@
 					"    df['helpful0'][i]= x[0]\r\n",
 					"    df['helpful1'][i]= x[1]"
 				],
-				"execution_count": 24
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -242,7 +261,7 @@
 				"source": [
 					"len( df['helpful0']),len(df['helpful1']),len(df['helpful'])"
 				],
-				"execution_count": 8
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -260,7 +279,7 @@
 				"source": [
 					"df.drop('helpful', axis=1,inplace=True)"
 				],
-				"execution_count": 25
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -278,7 +297,7 @@
 				"source": [
 					"df.drop('__index_level_0__', axis=1,inplace=True) "
 				],
-				"execution_count": 26
+				"execution_count": null
 			},
 			{
 				"cell_type": "markdown",
@@ -309,7 +328,7 @@
 				"source": [
 					"df.info()"
 				],
-				"execution_count": 27
+				"execution_count": null
 			},
 			{
 				"cell_type": "markdown",
@@ -344,7 +363,7 @@
 					"\r\n",
 					""
 				],
-				"execution_count": 11
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -362,7 +381,7 @@
 				"source": [
 					"#df_pais[(df_pais['Clave_Hash'] == 61546) | (df_pais['Clave_Hash'] == 61547)]"
 				],
-				"execution_count": 12
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -384,7 +403,7 @@
 					"sparkDF2.show()\r\n",
 					""
 				],
-				"execution_count": 31
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -402,7 +421,7 @@
 				"source": [
 					"df.head(1)"
 				],
-				"execution_count": 35
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -439,7 +458,7 @@
 				"source": [
 					"sparkDF2.write.mode(\"overwrite\").saveAsTable(\"default.tabla_reviews_Amazon_Instant_Video\")"
 				],
-				"execution_count": 36
+				"execution_count": null
 			},
 			{
 				"cell_type": "code",
@@ -475,7 +494,7 @@
 				"source": [
 					"sparkDF2.write.format(\"parquet\").mode(\"overwrite\").save(\"/training/reviews/reviews_Amazon_Instant_Video_5.gz.parquet\")"
 				],
-				"execution_count": 37
+				"execution_count": null
 			}
 		]
 	}
