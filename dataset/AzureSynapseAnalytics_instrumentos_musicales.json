@@ -5,7 +5,7 @@
 			"referenceName": "azure-workspace-WorkspaceDefaultSqlServer",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"DBName": "benja"
+				"DBName": "Database1"
 			}
 		},
 		"annotations": [],
