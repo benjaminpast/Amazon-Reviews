@@ -1,0 +1,22 @@
+{
+	"name": "reviews_analytics",
+	"properties": {
+		"Name": "reviews_analytics",
+		"EntityType": "DATABASE",
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"Properties": {
+			"IsSyMSCDMDatabase": true
+		},
+		"Source": {
+			"Provider": "ADLS",
+			"Location": "abfss://synapse@pfhenry.dfs.core.windows.net/reviews_analytics",
+			"Properties": {
+				"FormatType": "parquet",
+				"LinkedServiceName": "azure-workspace-WorkspaceDefaultStorage"
+			}
+		}
+	},
+	"type": "DATABASE"
+}
