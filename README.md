@@ -18,6 +18,8 @@ Un modelo o sistema de recomendación como herramienta que establece un conjunto
 
 Todo el proyecto se realizo con la arquitectura de datos disponibles en azure, con Synaptic ingestamos datos nuevos a nuestra base de datos y un dashboard que se realizó en Power Bi que muestra todos los datos relevantes a los ejecutivos de la empresa para poder tomar decisiones rápidamente y una aplicacion en Sreamlit para probar el funcionamiento del modelo.
 
+## Recursos
+* Datasets: http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/
 
 ## Integrantes
 ##### Benjamin Pastor [![N|Solid](https://icons.iconarchive.com/icons/limav/flat-gradient-social/24/Linkedin-icon.png)](https://www.linkedin.com/in/benjamin-pastor-bb18b7241/)
